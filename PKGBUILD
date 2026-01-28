@@ -11,25 +11,27 @@ source=("git+https://github.com/helwan-linux/mycar.git")
 md5sums=('SKIP')
 
 package() {
+    # الدخول للمجلد اللي نزل من جيت هاب
     cd "$srcdir/mycar"
 
-    # 1. إنشاء المسارات في النظام
+    # إنشاء المسارات في النظام
     install -d "$pkgdir/usr/share/helwan-mycar"
     install -d "$pkgdir/usr/bin"
     install -d "$pkgdir/usr/share/applications"
     install -d "$pkgdir/usr/share/pixmaps"
 
-    # 2. نسخ ملفات اللعبة (Assets والسكربتات)
-    cp -r * "$pkgdir/usr/share/helwan-mycar/"
+    # نسخ محتويات مجلد car بالكامل إلى مسار البرنامج
+    # لاحظ إننا بننسخ اللي "جوه" مجلد car عشان main.py يبقى في الجذر بتاع helwan-mycar
+    cp -r car/* "$pkgdir/usr/share/helwan-mycar/"
 
-    # 3. إنشاء سكربت تشغيل في /usr/bin لتسهيل الاستدعاء
+    # إنشاء سكربت التشغيل
     echo -e "#!/bin/bash\ncd /usr/share/helwan-mycar && python main.py" > "$pkgdir/usr/bin/helwan-mycar"
     chmod +x "$pkgdir/usr/bin/helwan-mycar"
 
-    # 4. تثبيت الأيقونة (بفرض وجود أيقونة باسم car_dodge.png في Assets)
-    install -m644 Assets/car_dodge.png "$pkgdir/usr/share/pixmaps/helwan-mycar.png"
+    # تثبيت الأيقونة (الموجودة داخل car/Assets/)
+    install -m644 car/Assets/car_dodge.png "$pkgdir/usr/share/pixmaps/helwan-mycar.png"
 
-    # 5. إنشاء ملف الـ Desktop Entry لتظهر في القائمة
+    # إنشاء ملف الـ Desktop Entry
     cat <<EOF > "$pkgdir/usr/share/applications/helwan-mycar.desktop"
 [Desktop Entry]
 Name=Helwan MyCar
