@@ -169,7 +169,7 @@ class Coins(pygame.sprite.Sprite):
 		if self.coin_type == 1:
 			# العملات العادية (نفترض وجود 6 إطارات من 1 إلى 6)
 			for i in range(1, 7):
-				img = pygame.image.load(f'Assets/Coins/{i}.png')
+				img = pygame.image.load(f'Assets/coins/{i}.png')
 				self.images.append(img)
 		else:
 			# ⭐️ منطق جديد للعملات النادرة (للتغلب على مشكلة نقص الملفات)
@@ -187,7 +187,7 @@ class Coins(pygame.sprite.Sprite):
 				# إذا لم نجد أياً من صور العملات النادرة، نستخدم إطارات العملات العادية كبديل آمن
 				# (باستخدام الإطارات 3، 4، 5، 6 الموجودة لتجنب Coins/7.png)
 				for i in range(3, 7):
-					img = pygame.image.load(f'Assets/Coins/{i}.png')
+					img = pygame.image.load(f'Assets/coins/{i}.png')
 					self.images.append(img)
 					
 			# ⭐️ نهاية منطق الإصلاح
@@ -198,7 +198,7 @@ class Coins(pygame.sprite.Sprite):
 		# تأكد من أن هناك صور تم تحميلها لتجنب خطأ قائمة فارغة
 		if not self.images:
 			# في حال فشل كل شيء (وهو أمر غير مرجح الآن)، نستخدم صورة واحدة معروفة
-			self.image = pygame.image.load('Assets/Coins/1.png')
+			self.image = pygame.image.load('Assets/coins/1.png')
 			self.images.append(self.image)
 		
 		self.image = self.images[self.index]
